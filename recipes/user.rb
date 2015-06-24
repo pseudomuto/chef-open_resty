@@ -7,5 +7,5 @@
 user node["open_resty"]["user"] do
   system true
   shell "/bin/false"
-  home "/var/www"
+  home node["open_resty"]["home"]
 end

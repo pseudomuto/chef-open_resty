@@ -1,6 +1,6 @@
 # installation details
-default["open_resty"]["user"]  = "www-data"
-default["open_resty"]["group"] = default["open_resty"]["user"]
+default["open_resty"]["user"] = "www-data"
+default["open_resty"]["home"] = "/var/www"
 
 # package details
 default["open_resty"]["version"]  = "1.7.10.1"
