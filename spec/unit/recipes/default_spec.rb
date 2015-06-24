@@ -12,6 +12,10 @@ describe "open_resty::default" do
     runner.converge(described_recipe)
   end
 
+  it "includes the apt recipe" do
+    expect(chef_run).to include_recipe("open_resty::apt")
+  end
+
   it "includes the user recipe" do
     expect(chef_run).to include_recipe("open_resty::user")
   end

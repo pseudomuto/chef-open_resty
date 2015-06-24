@@ -2,6 +2,10 @@
 
 A cookbook for installing [openresty].
 
+## Dependencies
+
+* `apt`
+
 ## Attributes
 
 Name | Description | Default

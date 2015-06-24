@@ -4,4 +4,5 @@
 #
 # Copyright (c) 2015 The Authors, All Rights Reserved.
 
+include_recipe("open_resty::apt")
 include_recipe("open_resty::user")
