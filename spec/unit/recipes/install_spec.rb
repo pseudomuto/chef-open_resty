@@ -6,17 +6,13 @@
 
 require "spec_helper"
 
-describe "open_resty::default" do
-  INCLUDED_RECIPES = %w(apt user install)
-
+describe "open_resty::install" do
   let(:chef_run) do
     runner = ChefSpec::ServerRunner.new
     runner.converge(described_recipe)
   end
 
-  INCLUDED_RECIPES.each do |recipe|
-    it "includes the #{recipe} recipe" do
-      expect(chef_run).to include_recipe("open_resty::#{recipe}")
-    end
+  it "should make install open resty" do
+    expect(chef_run).to install_with_make_ark("openresty")
   end
 end

@@ -6,3 +6,4 @@
 
 include_recipe("open_resty::apt")
 include_recipe("open_resty::user")
+include_recipe("open_resty::install")
