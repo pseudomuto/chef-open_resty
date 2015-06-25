@@ -16,8 +16,8 @@ describe "open_resty::apt" do
     build-essential
   )
 
-  let(:chef_run) do
-    runner = ChefSpec::ServerRunner.new
+  cached(:chef_run) do
+    runner = ChefSpec::SoloRunner.new
     runner.converge(described_recipe)
   end
 

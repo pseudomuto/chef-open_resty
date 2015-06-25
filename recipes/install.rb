@@ -4,8 +4,8 @@
 #
 # Copyright (c) 2015 The Authors, All Rights Reserved.
 
-version  = node["open_resty"]["version"]
-checksum = node["open_resty"]["checksum"]
+version  = node["open_resty"]["source"]["version"]
+checksum = node["open_resty"]["source"]["checksum"]
 
 ark "openresty" do
   url "http://openresty.org/download/ngx_openresty-#{version}.tar.gz"

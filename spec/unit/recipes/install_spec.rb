@@ -9,7 +9,7 @@ require "spec_helper"
 describe "open_resty::install" do
   context "with default attributes" do
     let(:chef_run) do
-      runner = ChefSpec::ServerRunner.new
+      runner = ChefSpec::SoloRunner.new
       runner.converge(described_recipe)
     end
 
@@ -23,9 +23,9 @@ describe "open_resty::install" do
     let(:checksum) { "a" * 64 }
 
     let(:chef_run) do
-      runner = ChefSpec::ServerRunner.new do |node|
-        node.set["open_resty"]["version"]  = version
-        node.set["open_resty"]["checksum"] = checksum
+      runner = ChefSpec::SoloRunner.new do |node|
+        node.set["open_resty"]["source"]["version"]  = version
+        node.set["open_resty"]["source"]["checksum"] = checksum
       end
 
       runner.converge(described_recipe)

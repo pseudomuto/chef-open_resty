@@ -9,7 +9,7 @@ require "spec_helper"
 describe "open_resty::user" do
   context "when default attributes are used" do
     let(:chef_run) do
-      runner = ChefSpec::ServerRunner.new
+      runner = ChefSpec::SoloRunner.new
       runner.converge(described_recipe)
     end
 
@@ -27,7 +27,7 @@ describe "open_resty::user" do
     let(:home) { "/some/location" }
 
     let(:chef_run) do
-      runner = ChefSpec::ServerRunner.new do |node|
+      runner = ChefSpec::SoloRunner.new do |node|
         node.set["open_resty"]["user"] = user
         node.set["open_resty"]["home"] = home
       end

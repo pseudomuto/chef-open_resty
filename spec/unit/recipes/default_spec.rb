@@ -7,10 +7,10 @@
 require "spec_helper"
 
 describe "open_resty::default" do
-  INCLUDED_RECIPES = %w(apt user install)
+  INCLUDED_RECIPES = %w(apt user install setup)
 
-  let(:chef_run) do
-    runner = ChefSpec::ServerRunner.new
+  cached(:chef_run) do
+    runner = ChefSpec::SoloRunner.new
     runner.converge(described_recipe)
   end
 
