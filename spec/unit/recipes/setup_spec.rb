@@ -44,6 +44,14 @@ describe "open_resty::setup" do
         mode: 00755
       )
     end
+
+    it "creates the nginx.conf file" do
+      expect(chef_run).to create_template("/etc/nginx/nginx.conf").with(
+        owner: "root",
+        group: "root",
+        mode: 0644
+      )
+    end
   end
 
   context "when custom attribute values are supplied" do

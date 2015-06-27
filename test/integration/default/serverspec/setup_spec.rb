@@ -26,4 +26,9 @@ describe "open_resty::setup" do
     it { should be_mode(755) }
     it { should be_owned_by("root") }
   end
+
+  describe file("/etc/nginx/nginx.conf") do
+    it { should be_file }
+    it { should be_mode(644) }
+  end
 end

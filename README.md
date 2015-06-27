@@ -27,4 +27,46 @@ Name | Description | Default
 `node["open_resty"]["nginx"]["dir"]` | Where to setup nginx | `/etc/nginx`
 `node["open_resty"]["nginx"]["log_dir"]` | Nginx log directory | `/var/log/nginx`
 
+#### These all correlate to nginx directives (of the same name)
+Name | Default
+-----| -------
+`node["open_resty"]["nging"]["worker_processes"]` | `auto` - 1 per CPU
+`node["open_resty"]["nginx"]["worker_rlimit_nofile"]` | `200,000`
+`node["open_resty"]["nginx"]["worker_connections"]` | `4096`
+`node["open_resty"]["nginx"]["pid"]` | `/var/run/nginx.pid`
+`node["open_resty"]["nginx"]["gzip"]` | `on`
+`node["open_resty"]["nginx"]["gzip_buffers"]` | `16 8k`
+`node["open_resty"]["nginx"]["gzip_http_version"]` | `1.0`
+`node["open_resty"]["nginx"]["gzip_comp_level"]` | `6`
+`node["open_resty"]["nginx"]["gzip_min_length"]` | `256`
+`node["open_resty"]["nginx"]["gzip_proxied"]` | `any`
+`node["open_resty"]["nginx"]["gzip_disable"]` | `MSIE [1-6]\.(?!\.*SV1)`
+`node["open_resty"]["nginx"]["gzip_vary"]` | `on`
+`node["open_resty"]["nginx"]["gzip_types"]` | `
+  application/javascript
+  application/json
+  application/vnd.ms-fontobject
+  application/x-font-ttf
+  application/x-javascript
+  application/xml
+  application/xml+rss
+  font/opentype
+  image/svg+xml
+  image/x-icon
+  text/css
+  text/javascript
+  text/plain
+  text/xml`
+`node["open_resty"]["nginx"]["open_file_cache_max"]` | `1000`
+`node["open_resty"]["nginx"]["open_file_cache_inactive"]` | `20s`
+`node["open_resty"]["nginx"]["open_file_cache_valid"]` | `30s`
+`node["open_resty"]["nginx"]["open_file_cache_min_uses"]` | `2`
+`node["open_resty"]["nginx"]["open_file_cache_errors"]` | `on`
+`node["open_resty"]["nginx"]["server_names_hash_bucket_size"]` | `64`
+`node["open_resty"]["nginx"]["types_hash_bucket_size"]` | `64`
+`node["open_resty"]["nginx"]["types_hash_max_size"]` | `2048`
+`node["open_resty"]["nginx"]["client_body_buffer_size"]` | `8k`
+`node["open_resty"]["nginx"]["client_max_body_size"]` | `20M`
+`node["open_resty"]["nginx"]["large_client_header_buffers"]` | `32 32k`
+
 [openresty]: http://www.openresty.org/
