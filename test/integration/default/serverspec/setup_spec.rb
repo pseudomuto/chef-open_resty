@@ -31,4 +31,9 @@ describe "open_resty::setup" do
     it { should be_file }
     it { should be_mode(644) }
   end
+
+  describe service("nginx") do
+    it { should be_enabled }
+    it { should be_running }
+  end
 end

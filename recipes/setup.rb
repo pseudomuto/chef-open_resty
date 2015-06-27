@@ -25,8 +25,8 @@ nginx_template_vars = {
   worker_rlimit_nofile:  node["open_resty"]["nginx"]["worker_rlimit_nofile"],
   worker_connections:    node["open_resty"]["nginx"]["worker_connections"],
   pid:                   node["open_resty"]["nginx"]["pid"],
-  access_log:            File.join(nginx_log_dir, "access.log"),
-  error_log:             File.join(nginx_log_dir, "error.log"),
+  access_log:            ::File.join(nginx_log_dir, "access.log"),
+  error_log:             ::File.join(nginx_log_dir, "error.log"),
 
   gzip:               node["open_resty"]["nginx"]["gzip"],
   gzip_buffers:       node["open_resty"]["nginx"]["gzip_buffers"],
@@ -67,7 +67,7 @@ directory nginx_dir do
 end
 
 nginx_subdirs.each do |subdir|
-  directory File.join(nginx_dir, subdir) do
+  directory ::File.join(nginx_dir, subdir) do
     owner "root"
     group "root"
     mode 0755
@@ -80,17 +80,40 @@ directory nginx_log_dir do
   mode 0755
 end
 
-template File.join(nginx_dir, "nginx.conf") do
-  source "nginx.conf.erb"
-  variables nginx_template_vars
+template "/etc/default/nginx" do
+  source "nginx.default.erb"
+  variables(
+    nginx_conf: File.join(nginx_dir, "nginx.conf"),
+    pid: node["open_resty"]["nginx"]["pid"]
+  )
   owner "root"
   group "root"
   mode 0644
 end
 
+template "/etc/init.d/nginx" do
+  source "nginx.init.erb"
+  owner "root"
+  group "root"
+  mode 0755
+end
+
+template ::File.join(nginx_dir, "nginx.conf") do
+  source "nginx.conf.erb"
+  variables nginx_template_vars
+  owner "root"
+  group "root"
+  mode 0644
+  notifies :reload, "service[nginx]"
+end
+
+service "nginx" do
+  supports restart: true, reload: true
+  action [:enable, :start]
+end
+
 if node["open_resty"]["testing"]
   open_resty_site "test_site.conf.erb" do
     action [:create, :enable]
-    variables {}
   end
 end

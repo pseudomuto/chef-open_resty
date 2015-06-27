@@ -52,6 +52,27 @@ describe "open_resty::setup" do
         mode: 0644
       )
     end
+
+    it "creates the nginx defaults file" do
+      expect(chef_run).to create_template("/etc/default/nginx").with(
+        owner: "root",
+        group: "root",
+        mode: 0644
+      )
+    end
+
+    it "creates the /etc/init.d/nginx file" do
+      expect(chef_run).to create_template("/etc/init.d/nginx").with(
+        owner: "root",
+        group: "root",
+        mode: 0755
+      )
+    end
+
+    it "enables and starts the nginx service" do
+      expect(chef_run).to enable_service("nginx")
+      expect(chef_run).to start_service("nginx")
+    end
   end
 
   context "when custom attribute values are supplied" do
@@ -97,6 +118,27 @@ describe "open_resty::setup" do
         group: "root",
         mode: 00755
       )
+    end
+
+    it "creates the nginx defaults file" do
+      expect(chef_run).to create_template("/etc/default/nginx").with(
+        owner: "root",
+        group: "root",
+        mode: 0644
+      )
+    end
+
+    it "creates the /etc/init.d/nginx file" do
+      expect(chef_run).to create_template("/etc/init.d/nginx").with(
+        owner: "root",
+        group: "root",
+        mode: 0755
+      )
+    end
+
+    it "enables and starts the nginx service" do
+      expect(chef_run).to enable_service("nginx")
+      expect(chef_run).to start_service("nginx")
     end
   end
 end
