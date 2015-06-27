@@ -87,3 +87,10 @@ template File.join(nginx_dir, "nginx.conf") do
   group "root"
   mode 0644
 end
+
+if node["open_resty"]["testing"]
+  open_resty_site "test_site.conf.erb" do
+    action [:create, :enable]
+    variables {}
+  end
+end

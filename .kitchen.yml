@@ -13,3 +13,5 @@ suites:
     run_list:
       - recipe[open_resty]
     attributes:
+      open_resty:
+        testing: true
