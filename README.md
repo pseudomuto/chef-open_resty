@@ -12,7 +12,7 @@ A cookbook for installing [openresty].
 ```json
 run_list: ["recipe[open_resty]"],
 "default_attributes": {
-  "open_resty:" {
+  "open_resty": {
     ...
   }
 }
@@ -53,21 +53,7 @@ Name | Default
 `node["open_resty"]["nginx"]["gzip_proxied"]` | `any`
 `node["open_resty"]["nginx"]["gzip_disable"]` | `MSIE [1-6]\.(?!\.*SV1)`
 `node["open_resty"]["nginx"]["gzip_vary"]` | `on`
-`node["open_resty"]["nginx"]["gzip_types"]` | `
-  application/javascript
-  application/json
-  application/vnd.ms-fontobject
-  application/x-font-ttf
-  application/x-javascript
-  application/xml
-  application/xml+rss
-  font/opentype
-  image/svg+xml
-  image/x-icon
-  text/css
-  text/javascript
-  text/plain
-  text/xml`
+`node["open_resty"]["nginx"]["gzip_types"]` | _see attributes/nginx.rb_
 `node["open_resty"]["nginx"]["open_file_cache_max"]` | `1000`
 `node["open_resty"]["nginx"]["open_file_cache_inactive"]` | `20s`
 `node["open_resty"]["nginx"]["open_file_cache_valid"]` | `30s`
