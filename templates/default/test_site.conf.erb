@@ -8,3 +8,17 @@ server {
     ';
   }
 }
+
+server {
+  listen 81;
+
+  location / {
+    content_by_lua '
+      local ok, res
+      ok, res = pcall(test_module.call)
+      if not ok then
+        ngx.log(ngx.ERR, "test_module failed: " .. tostring(res))
+      end
+    ';
+  }
+}

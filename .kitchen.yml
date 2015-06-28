@@ -14,4 +14,8 @@ suites:
       - recipe[open_resty]
     attributes:
       open_resty:
+        nginx:
+          lua_package_path: /var/www/?.lua;;
+        lua_modules:
+          - test_module
         testing: true

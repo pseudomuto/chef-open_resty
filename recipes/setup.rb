@@ -16,6 +16,13 @@ if nginx_worker_processes == "auto"
   nginx_worker_processes = node.fetch("cpu", {}).fetch("total", 1)
 end
 
+lua_variables = {
+  use_default_type:  node["open_resty"]["nginx"]["lua_use_default_type"],
+  package_path:      node["open_resty"]["nginx"]["lua_package_path"],
+  package_cpath:     node["open_resty"]["nginx"]["lua_package_cpath"],
+  modules:           node["open_resty"]["lua_modules"]
+}
+
 nginx_template_vars = {
   user:                  nginx_user,
   group:                 nginx_group,
@@ -49,7 +56,9 @@ nginx_template_vars = {
   types_hash_max_size:            node["open_resty"]["nginx"]["types_hash_max_size"],
   client_body_buffer_size:        node["open_resty"]["nginx"]["client_body_buffer_size"],
   client_max_body_size:           node["open_resty"]["nginx"]["client_max_body_size"],
-  large_client_header_buffers:    node["open_resty"]["nginx"]["large_client_header_buffers"]
+  large_client_header_buffers:    node["open_resty"]["nginx"]["large_client_header_buffers"],
+
+  lua_variables: lua_variables
 }
 
 directory node["open_resty"]["home"] do
@@ -113,6 +122,11 @@ service "nginx" do
 end
 
 if node["open_resty"]["testing"]
+  cookbook_file "test_module.lua" do
+    path "/var/www/test_module.lua"
+    action :create_if_missing
+  end
+
   open_resty_site "test_site.conf.erb" do
     action [:create, :enable]
   end

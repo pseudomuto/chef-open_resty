@@ -50,6 +50,8 @@ http {
   client_max_body_size          <%= @client_max_body_size %>;
   large_client_header_buffers   <%= @large_client_header_buffers %>;
 
+  <%= render "_lua.conf.erb", variables: @lua_variables %>
+
   include <%= @config_includes %>;
   include <%= @sites_enabled %>;
 }

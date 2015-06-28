@@ -7,6 +7,17 @@ A cookbook for installing [openresty].
 * `apt`
 * `ark`
 
+## Basic Usage
+
+```json
+run_list: ["recipe[open_resty]"],
+"default_attributes": {
+  "open_resty:" {
+    ...
+  }
+}
+```
+
 ## Attributes
 
 ### Default
@@ -30,7 +41,7 @@ Name | Description | Default
 #### These all correlate to nginx directives (of the same name)
 Name | Default
 -----| -------
-`node["open_resty"]["nging"]["worker_processes"]` | `auto` - 1 per CPU
+`node["open_resty"]["nginx"]["worker_processes"]` | `auto` - 1 per CPU
 `node["open_resty"]["nginx"]["worker_rlimit_nofile"]` | `200,000`
 `node["open_resty"]["nginx"]["worker_connections"]` | `4096`
 `node["open_resty"]["nginx"]["pid"]` | `/var/run/nginx.pid`
@@ -68,5 +79,13 @@ Name | Default
 `node["open_resty"]["nginx"]["client_body_buffer_size"]` | `8k`
 `node["open_resty"]["nginx"]["client_max_body_size"]` | `20M`
 `node["open_resty"]["nginx"]["large_client_header_buffers"]` | `32 32k`
+`node["open_resty"]["nginx"]["lua_use_default_type"]` | `off`
+`node["open_resty"]["nginx"]["lua_package_path"]` | `;;`
+`node["open_resty"]["nginx"]["lua_package_cpath"]` | `;;`
+
+#### Lua Settings
+Name | Description | Default
+-----| ----------- | -------
+`node["open_resty"]["lua_modules"]` | An array of modules to make available during `init_by_lua` | `[]`
 
 [openresty]: http://www.openresty.org/

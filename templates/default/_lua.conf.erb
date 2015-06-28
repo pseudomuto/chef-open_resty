@@ -1,0 +1,15 @@
+lua_use_default_type <%= @use_default_type %>;
+lua_package_path     "<%= @package_path %>";
+lua_package_cpath    "<%= @package_cpath %>";
+
+init_by_lua '
+  local ok, res
+  <% @modules.each do |name| %>
+  ok, res = pcall(require, "<%= name %>")
+  if not ok then
+    error("require(<%= name %>) failed: " .. tostring(res))
+  else
+    <%= name %> = res
+  end
+  <% end %>
+';

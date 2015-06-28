@@ -43,3 +43,7 @@ default["open_resty"]["nginx"]["types_hash_max_size"]           = 2048
 default["open_resty"]["nginx"]["client_body_buffer_size"]       = "8k"
 default["open_resty"]["nginx"]["client_max_body_size"]          = "20M"
 default["open_resty"]["nginx"]["large_client_header_buffers"]   = "32 32k"
+
+default["open_resty"]["nginx"]["lua_use_default_type"] = "off"
+default["open_resty"]["nginx"]["lua_package_path"]     = ";;"
+default["open_resty"]["nginx"]["lua_package_cpath"]    = ";;"
