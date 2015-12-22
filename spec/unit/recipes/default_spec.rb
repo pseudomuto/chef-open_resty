@@ -10,8 +10,12 @@ describe "open_resty::default" do
   INCLUDED_RECIPES = %w(apt user install setup)
 
   cached(:chef_run) do
-    runner = ChefSpec::SoloRunner.new
+    runner = ChefSpec::ServerRunner.new
     runner.converge(described_recipe)
+  end
+
+  it "includes runit recipe" do
+    expect(chef_run).to include_recipe("runit")
   end
 
   INCLUDED_RECIPES.each do |recipe|

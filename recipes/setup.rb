@@ -86,7 +86,7 @@ end
 directory nginx_log_dir do
   owner "root"
   group "root"
-  mode 0755
+  mode 00755
 end
 
 template "/etc/default/nginx" do
@@ -97,14 +97,7 @@ template "/etc/default/nginx" do
   )
   owner "root"
   group "root"
-  mode 0644
-end
-
-template "/etc/init.d/nginx" do
-  source "nginx.init.erb"
-  owner "root"
-  group "root"
-  mode 0755
+  mode 00644
 end
 
 template ::File.join(nginx_dir, "nginx.conf") do
@@ -116,9 +109,8 @@ template ::File.join(nginx_dir, "nginx.conf") do
   notifies :reload, "service[nginx]"
 end
 
-service "nginx" do
-  supports restart: true, reload: true
-  action [:enable, :start]
+runit_service "nginx" do
+  default_logger true
 end
 
 if node["open_resty"]["testing"]

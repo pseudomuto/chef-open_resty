@@ -17,7 +17,7 @@ describe "open_resty::apt" do
   )
 
   cached(:chef_run) do
-    runner = ChefSpec::SoloRunner.new
+    runner = ChefSpec::ServerRunner.new
     runner.converge(described_recipe)
   end
 

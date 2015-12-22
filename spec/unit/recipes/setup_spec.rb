@@ -9,7 +9,7 @@ require "spec_helper"
 describe "open_resty::setup" do
   context "when default parameters are used" do
     cached(:chef_run) do
-      runner = ChefSpec::SoloRunner.new
+      runner = ChefSpec::ServerRunner.new
       runner.converge(described_recipe)
     end
 
@@ -61,24 +61,15 @@ describe "open_resty::setup" do
       )
     end
 
-    it "creates the /etc/init.d/nginx file" do
-      expect(chef_run).to create_template("/etc/init.d/nginx").with(
-        owner: "root",
-        group: "root",
-        mode: 0755
-      )
-    end
-
-    it "enables and starts the nginx service" do
-      expect(chef_run).to enable_service("nginx")
-      expect(chef_run).to start_service("nginx")
+    it "installs and enables the runit service" do
+      expect(chef_run).to enable_runit_service("nginx")
     end
   end
 
   context "when custom attribute values are supplied" do
     cached(:chef_run) do
-      runner = ChefSpec::SoloRunner.new do |node|
-        node.set["open_resty"]["user"] = "nginx-www"
+      runner = ChefSpec::ServerRunner.new do |node|
+        node.set["open_resty"]["user"]  = "nginx-www"
         node.set["open_resty"]["nginx"] = {
           "dir" => "/etc/nginx_special",
           "log_dir" => "/var/www/logs"
@@ -124,21 +115,14 @@ describe "open_resty::setup" do
       expect(chef_run).to create_template("/etc/default/nginx").with(
         owner: "root",
         group: "root",
-        mode: 0644
+        mode: 00644
       )
     end
 
-    it "creates the /etc/init.d/nginx file" do
-      expect(chef_run).to create_template("/etc/init.d/nginx").with(
-        owner: "root",
-        group: "root",
-        mode: 0755
+    it "installs and enables the runit service" do
+      expect(chef_run).to enable_runit_service("nginx").with(
+        default_logger: true
       )
-    end
-
-    it "enables and starts the nginx service" do
-      expect(chef_run).to enable_service("nginx")
-      expect(chef_run).to start_service("nginx")
     end
   end
 end

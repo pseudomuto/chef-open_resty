@@ -26,6 +26,7 @@ end
 
 action :delete do
   service "nginx" do
+    reload_command "sv reload nginx"
     action :nothing
   end
 
@@ -46,6 +47,7 @@ end
 
 action :enable do
   service "nginx" do
+    reload_command "sv reload nginx"
     action :nothing
   end
 
@@ -63,6 +65,7 @@ end
 
 action :disable do
   service "nginx" do
+    reload_command "sv reload nginx"
     action :nothing
   end
 
