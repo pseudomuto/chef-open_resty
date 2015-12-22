@@ -18,7 +18,7 @@ action :create do
     variables new_resource.variables
     user "root"
     group "root"
-    mode 0644
+    mode 00644
   end
 
   new_resource.updated_by_last_action(sub_action.updated_by_last_action?)
@@ -53,7 +53,7 @@ action :enable do
     to available_site_path
     owner "root"
     group "root"
-    mode 0644
+    mode 00644
     not_if { ::File.exist?(enabled_site_path) }
     notifies :reload, "open_resty_service[nginx]"
   end
