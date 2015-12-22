@@ -1,0 +1,21 @@
+---
+AllCops:
+  Exclude:
+    - "vendor/**/*"
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/ClassLength:
+  Exclude:
+    - spec/**/*_spec.rb
+    - test/**/*_test.rb
