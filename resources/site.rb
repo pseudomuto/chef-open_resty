@@ -1,6 +1,8 @@
 attribute :name, kind_of: String, name_attribute: true
 attribute :variables, kind_of: Array
 
+default_action :create
+
 def nginx_path
   run_context.node["open_resty"]["nginx"]["dir"]
 end

@@ -99,17 +99,15 @@ template ::File.join(nginx_dir, "nginx.conf") do
   notifies :reload, "open_resty_service[nginx]"
 end
 
-if nginx_testing
-  cookbook_file "test_module.lua" do
-    path "/var/www/test_module.lua"
-    action :create_if_missing
-  end
+cookbook_file "test_module.lua" do
+  path "/var/www/test_module.lua"
+  action :create_if_missing
+  only_if { nginx_testing }
 end
 
 open_resty_service "nginx"
 
-if nginx_testing
-  open_resty_site "test_site.conf.erb" do
-    action [:create, :enable]
-  end
+open_resty_site "test_site.conf.erb" do
+  action [:create, :enable]
+  only_if { nginx_testing }
 end
