@@ -7,9 +7,10 @@
 nginx_user  = node["open_resty"]["user"]
 nginx_group = nginx_user
 
-nginx_dir = node["open_resty"]["nginx"]["dir"]
+nginx_dir     = node["open_resty"]["nginx"]["dir"]
 nginx_log_dir = node["open_resty"]["nginx"]["log_dir"]
 nginx_subdirs = %w(conf.d sites-available sites-enabled ssl)
+nginx_testing = node["open_resty"]["testing"]
 
 nginx_worker_processes = node["open_resty"]["nginx"]["worker_processes"]
 if nginx_worker_processes == "auto"
@@ -64,14 +65,14 @@ nginx_template_vars = {
 directory node["open_resty"]["home"] do
   owner nginx_user
   group nginx_group
-  mode 0755
+  mode 00755
   recursive true
 end
 
 directory nginx_dir do
   owner "root"
   group "root"
-  mode 0755
+  mode 00755
   recursive true
 end
 
@@ -79,32 +80,14 @@ nginx_subdirs.each do |subdir|
   directory ::File.join(nginx_dir, subdir) do
     owner "root"
     group "root"
-    mode 0755
+    mode 00755
   end
 end
 
 directory nginx_log_dir do
   owner "root"
   group "root"
-  mode 0755
-end
-
-template "/etc/default/nginx" do
-  source "nginx.default.erb"
-  variables(
-    nginx_conf: File.join(nginx_dir, "nginx.conf"),
-    pid: node["open_resty"]["nginx"]["pid"]
-  )
-  owner "root"
-  group "root"
-  mode 0644
-end
-
-template "/etc/init.d/nginx" do
-  source "nginx.init.erb"
-  owner "root"
-  group "root"
-  mode 0755
+  mode 00755
 end
 
 template ::File.join(nginx_dir, "nginx.conf") do
@@ -112,22 +95,19 @@ template ::File.join(nginx_dir, "nginx.conf") do
   variables nginx_template_vars
   owner "root"
   group "root"
-  mode 0644
-  notifies :reload, "service[nginx]"
+  mode 00644
+  notifies :reload, "open_resty_service[nginx]"
 end
 
-service "nginx" do
-  supports restart: true, reload: true
-  action [:enable, :start]
+cookbook_file "test_module.lua" do
+  path "/var/www/test_module.lua"
+  action :create_if_missing
+  only_if { nginx_testing }
 end
 
-if node["open_resty"]["testing"]
-  cookbook_file "test_module.lua" do
-    path "/var/www/test_module.lua"
-    action :create_if_missing
-  end
+open_resty_service "nginx"
 
-  open_resty_site "test_site.conf.erb" do
-    action [:create, :enable]
-  end
+open_resty_site "test_site.conf.erb" do
+  action [:create, :enable]
+  only_if { nginx_testing }
 end

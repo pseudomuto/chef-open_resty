@@ -1,4 +1,5 @@
 # open_resty
+[![Build Status](https://travis-ci.org/pseudomuto/chef-open_resty.svg?branch=master)](https://travis-ci.org/pseudomuto/chef-open_resty)
 
 A cookbook for installing [openresty].
 
@@ -29,7 +30,7 @@ Name | Description | Default
 ### Source
 Name | Description | Default
 -----| ----------- | -------
-`node["open_resty"]["source"]["version"]` | The version to install | `1.7.10.1`
+`node["open_resty"]["source"]["version"]` | The version to install | `1.9.3.2`
 `node["open_resty"]["source"]["checksum"]` | The checksum for the version | see _attributes/default.rb_
 
 ### Nginx

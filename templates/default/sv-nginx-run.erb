@@ -1,0 +1,6 @@
+#!/bin/bash
+exec 2>&1
+
+BIN_FILE="/usr/local/openresty/nginx/sbin/nginx"
+CFG_FILE="<%= @options[:conf] %>"
+exec $BIN_FILE -c $CFG_FILE
