@@ -1,9 +1,6 @@
 #!/bin/bash
 exec 2>&1
 
-if [ -f /etc/default/nginx ]; then
-  . /etc/default/nginx
-fi
-
 BIN_FILE="/usr/local/openresty/nginx/sbin/nginx"
-exec $BIN_FILE $DAEMON_OPTS || true
+CFG_FILE="<%= @options[:conf] %>"
+exec $BIN_FILE -c $CFG_FILE

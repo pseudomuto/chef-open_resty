@@ -25,15 +25,14 @@ action :create do
 end
 
 action :delete do
-  service "nginx" do
-    reload_command "sv reload nginx"
+  open_resty_service "nginx" do
     action :nothing
   end
 
   link_action = file(enabled_site_path) do
     action :delete
     only_if { ::File.exist?(enabled_site_path) }
-    notifies :reload, "service[nginx]"
+    notifies :reload, "open_resty_service[nginx]"
   end
 
   source_action = file(available_site_path) do
@@ -46,8 +45,7 @@ action :delete do
 end
 
 action :enable do
-  service "nginx" do
-    reload_command "sv reload nginx"
+  open_resty_service "nginx" do
     action :nothing
   end
 
@@ -57,22 +55,21 @@ action :enable do
     group "root"
     mode 0644
     not_if { ::File.exist?(enabled_site_path) }
-    notifies :reload, "service[nginx]"
+    notifies :reload, "open_resty_service[nginx]"
   end
 
   new_resource.updated_by_last_action(sub_action.updated_by_last_action?)
 end
 
 action :disable do
-  service "nginx" do
-    reload_command "sv reload nginx"
+  open_resty_service "nginx" do
     action :nothing
   end
 
   sub_action = link(enabled_site_path) do
     action :delete
     only_if { ::File.exist?(enabled_site_path) }
-    notifies :reload, "service[nginx]"
+    notifies :reload, "open_resty_service[nginx]"
   end
 
   new_resource.updated_by_last_action(sub_action.updated_by_last_action?)

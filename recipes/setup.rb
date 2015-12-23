@@ -7,9 +7,10 @@
 nginx_user  = node["open_resty"]["user"]
 nginx_group = nginx_user
 
-nginx_dir = node["open_resty"]["nginx"]["dir"]
+nginx_dir     = node["open_resty"]["nginx"]["dir"]
 nginx_log_dir = node["open_resty"]["nginx"]["log_dir"]
 nginx_subdirs = %w(conf.d sites-available sites-enabled ssl)
+nginx_testing = !!node["open_resty"]["testing"]
 
 nginx_worker_processes = node["open_resty"]["nginx"]["worker_processes"]
 if nginx_worker_processes == "auto"
@@ -64,14 +65,14 @@ nginx_template_vars = {
 directory node["open_resty"]["home"] do
   owner nginx_user
   group nginx_group
-  mode 0755
+  mode 00755
   recursive true
 end
 
 directory nginx_dir do
   owner "root"
   group "root"
-  mode 0755
+  mode 00755
   recursive true
 end
 
@@ -79,7 +80,7 @@ nginx_subdirs.each do |subdir|
   directory ::File.join(nginx_dir, subdir) do
     owner "root"
     group "root"
-    mode 0755
+    mode 00755
   end
 end
 
@@ -105,20 +106,20 @@ template ::File.join(nginx_dir, "nginx.conf") do
   variables nginx_template_vars
   owner "root"
   group "root"
-  mode 0644
-  notifies :reload, "service[nginx]"
+  mode 00644
+  notifies :reload, "open_resty_service[nginx]"
 end
 
-runit_service "nginx" do
-  default_logger true
-end
-
-if node["open_resty"]["testing"]
+if nginx_testing
   cookbook_file "test_module.lua" do
     path "/var/www/test_module.lua"
     action :create_if_missing
   end
+end
 
+open_resty_service "nginx"
+
+if nginx_testing
   open_resty_site "test_site.conf.erb" do
     action [:create, :enable]
   end
