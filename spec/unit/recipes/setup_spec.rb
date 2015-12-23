@@ -53,14 +53,6 @@ describe "open_resty::setup" do
       )
     end
 
-    it "creates the nginx defaults file" do
-      expect(chef_run).to create_template("/etc/default/nginx").with(
-        owner: "root",
-        group: "root",
-        mode: 0644
-      )
-    end
-
     it "installs and enables the runit service" do
       expect(chef_run).to create_open_resty_service("nginx")
     end
@@ -108,14 +100,6 @@ describe "open_resty::setup" do
         owner: "root",
         group: "root",
         mode: 00755
-      )
-    end
-
-    it "creates the nginx defaults file" do
-      expect(chef_run).to create_template("/etc/default/nginx").with(
-        owner: "root",
-        group: "root",
-        mode: 00644
       )
     end
 

@@ -90,17 +90,6 @@ directory nginx_log_dir do
   mode 00755
 end
 
-template "/etc/default/nginx" do
-  source "nginx.default.erb"
-  variables(
-    nginx_conf: File.join(nginx_dir, "nginx.conf"),
-    pid: node["open_resty"]["nginx"]["pid"]
-  )
-  owner "root"
-  group "root"
-  mode 00644
-end
-
 template ::File.join(nginx_dir, "nginx.conf") do
   source "nginx.conf.erb"
   variables nginx_template_vars
