@@ -10,7 +10,7 @@ nginx_group = nginx_user
 nginx_dir     = node["open_resty"]["nginx"]["dir"]
 nginx_log_dir = node["open_resty"]["nginx"]["log_dir"]
 nginx_subdirs = %w(conf.d sites-available sites-enabled ssl)
-nginx_testing = !!node["open_resty"]["testing"]
+nginx_testing = node["open_resty"]["testing"]
 
 nginx_worker_processes = node["open_resty"]["nginx"]["worker_processes"]
 if nginx_worker_processes == "auto"

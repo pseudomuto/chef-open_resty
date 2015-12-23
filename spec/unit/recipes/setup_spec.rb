@@ -62,7 +62,7 @@ describe "open_resty::setup" do
     end
 
     it "installs and enables the runit service" do
-      expect(chef_run).to enable_runit_service("nginx")
+      expect(chef_run).to create_open_resty_service("nginx")
     end
   end
 
@@ -120,9 +120,7 @@ describe "open_resty::setup" do
     end
 
     it "installs and enables the runit service" do
-      expect(chef_run).to enable_runit_service("nginx").with(
-        default_logger: true
-      )
+      expect(chef_run).to create_open_resty_service("nginx")
     end
   end
 end
